@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
@@ -11,8 +12,73 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="uk.ac.tees.q5071488.journal.MainActivity">
 
-    <TextView
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"/>
+        android:background="#3F51B5"
+        android:drawableTop="@drawable/ic_home_black_18dp"
+        android:text="@string/btn_home"
+        android:textColor="#e8e9e9"
+        android:id="@+id/buttonHome"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#3F51B5"
+        android:drawableTop="@drawable/ic_note_add_black_18dp"
+        android:text="@string/btn_add"
+        android:textColor="#e8e9e9"
+        android:id="@+id/buttonAdd"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/buttonList"
+        android:layout_toRightOf="@+id/buttonHome"
+        android:layout_toEndOf="@+id/buttonHome"
+        android:layout_alignTop="@+id/buttonHome"
+        android:layout_alignBottom="@+id/buttonHome"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#3F51B5"
+        android:drawableTop="@drawable/ic_list_black_18dp"
+        android:text="@string/btn_list"
+        android:textColor="#e8e9e9"
+        android:id="@+id/buttonList"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/buttonSearch"
+        android:layout_toRightOf="@+id/buttonAdd"
+        android:layout_toEndOf="@+id/buttonAdd"
+        android:layout_alignTop="@+id/buttonHome"
+        android:layout_alignBottom="@+id/buttonHome"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#3F51B5"
+        android:drawableTop="@drawable/ic_search_black_18dp"
+        android:text="@string/btn_search"
+        android:textColor="#e8e9e9"
+        android:id="@+id/buttonSearch"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/buttonList"
+        android:layout_toEndOf="@+id/buttonList"
+        android:layout_alignTop="@+id/buttonHome"
+        android:layout_alignBottom="@+id/buttonHome"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/splash"
+        android:id="@+id/imageView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"/>
+
+
 </RelativeLayout>
