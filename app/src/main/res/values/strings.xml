@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Journal</string>
+    <string name="btn_home">Home</string>
+    <string name="btn_add">Add</string>
+    <string name="btn_list">List</string>
+    <string name="btn_search">Search</string>
+</resources>
