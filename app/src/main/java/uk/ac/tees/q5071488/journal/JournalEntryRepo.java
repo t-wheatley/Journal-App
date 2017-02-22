@@ -95,7 +95,6 @@ public class JournalEntryRepo
     }
 
 
-
     public void removeAll()
     {
         Log.d("Database", "Removing all entries.");

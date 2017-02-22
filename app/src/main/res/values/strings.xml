@@ -4,4 +4,10 @@
     <string name="btn_add">Add</string>
     <string name="btn_list">List</string>
     <string name="btn_search">Search</string>
+    <string name="text_radioPrompt">Select a category:</string>
+    <string name="radio_work">Work</string>
+    <string name="radio_personal">Personal</string>
+    <string name="text_notePrompt">Enter a note:</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_save">Save</string>
 </resources>
