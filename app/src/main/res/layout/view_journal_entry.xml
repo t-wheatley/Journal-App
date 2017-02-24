@@ -11,12 +11,23 @@
         android:visibility="gone"/>
 
     <TextView
-        android:id="@+id/entry_note"
+        android:id="@+id/entry_datetime"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="6dip"
         android:paddingTop="6dip"
         android:textSize="22sp"
         android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/entry_note"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="6dip"
+        android:paddingTop="6dip"
+        android:textSize="16sp"
+        android:maxLength="200"
+        android:maxLines="6"
+        android:ellipsize="end"/>/>
 
 </LinearLayout>

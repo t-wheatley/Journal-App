@@ -33,10 +33,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         btnSearch = (Button) findViewById(R.id.buttonSearch);
         btnSearch.setOnClickListener(this);
-
-
-        JournalEntryRepo repo = new JournalEntryRepo(this);
-        repo.removeAll();
     }
 
     @Override

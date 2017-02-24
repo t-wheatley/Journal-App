@@ -2,7 +2,6 @@ package uk.ac.tees.q5071488.journal;
 
 import android.app.ListActivity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class EntryList extends ListActivity implements android.view.View.OnClickListener
@@ -57,7 +57,9 @@ public class EntryList extends ListActivity implements android.view.View.OnClick
                         startActivity(objIndent);
                     }
                 });
-                ListAdapter adapter = new SimpleAdapter( this, entryList, R.layout.view_journal_entry, new String[] { "id","note"}, new int[] {R.id.entry_Id, R.id.entry_note});
+                Collections.sort(entryList, new DateComparator("datetime"));
+                Collections.reverse(entryList);
+                ListAdapter adapter = new SimpleAdapter( this, entryList, R.layout.view_journal_entry, new String[] { "id","note", "datetime"}, new int[] {R.id.entry_Id, R.id.entry_note, R.id.entry_datetime});
                 setListAdapter(adapter);
             }else{
                 Toast.makeText(this,"No entries!",Toast.LENGTH_SHORT).show();

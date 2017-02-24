@@ -43,7 +43,7 @@ public class JournalEntryRepo
         // Add new record to the database and return the id
         long entry_id = db.insert(journalEntry.TABLE, null, values);
 
-        // Query to add Julia Datetime
+        // Query to add Julian Datetime
         String datetimeQuery =  "UPDATE " + JournalEntry.TABLE +
                 " SET " +
                 JournalEntry.COL_DATETIME + " = (julianday('now'))" +
@@ -123,6 +123,9 @@ public class JournalEntryRepo
             do {
                 HashMap<String, String> entry = new HashMap<String, String>();
                 entry.put("id", cursor.getString(cursor.getColumnIndex(JournalEntry.COL_ID)));
+                entry.put("note", cursor.getString(cursor.getColumnIndex(JournalEntry.COL_NOTE)));
+                entry.put("datetime", cursor.getString(cursor.getColumnIndex("date(" + JournalEntry.COL_DATETIME + ")"))
+                        + " " + cursor.getString(cursor.getColumnIndex("time(" + JournalEntry.COL_DATETIME + ")")));
                 entryList.add(entry);
 
             } while (cursor.moveToNext());
@@ -154,6 +157,15 @@ public class JournalEntryRepo
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
 
+        // Query to add Julian Datetime
+        String datetimeQuery =  "UPDATE " + JournalEntry.TABLE +
+                " SET " +
+                JournalEntry.COL_DATETIME + " = (julianday('now'))" +
+                " WHERE " +
+                JournalEntry.COL_ID + " = " + entry.entry_ID;
+
+        db.execSQL(datetimeQuery);
+
         values.put(JournalEntry.COL_NOTE, entry.note);
         values.put(JournalEntry.COL_CATEGORY, entry.category);
 
@@ -164,6 +176,7 @@ public class JournalEntryRepo
                         JournalEntry.COL_ID + "= ?",
                         new String[] { String.valueOf(entry.entry_ID) }
                 );
+
         db.close();
     }
 
@@ -178,6 +191,5 @@ public class JournalEntryRepo
                 );
         db.close();
     }
-
 
 }
