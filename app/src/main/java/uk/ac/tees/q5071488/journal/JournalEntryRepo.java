@@ -98,7 +98,7 @@ public class JournalEntryRepo
         db.close();
         return entry;
     }
-    
+
     public ArrayList<HashMap<String, String>> getEntryList()
     {
         // Connect to the database to read data

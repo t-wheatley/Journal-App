@@ -34,6 +34,13 @@ public class EntryList extends ListActivity implements android.view.View.OnClick
         btnGetAll.setOnClickListener(this);
     }
 
+    public void onResume()
+    {
+        super.onResume();
+
+        btnGetAll.performClick();
+    }
+
     public void onClick(View view)
     {
         // If back button pressed

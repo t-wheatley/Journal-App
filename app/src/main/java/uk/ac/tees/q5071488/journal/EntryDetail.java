@@ -76,6 +76,10 @@ public class EntryDetail extends AppCompatActivity implements View.OnClickListen
             entry.entry_ID = _Entry_Id;
 
             repo.updateEntry(entry);
+
+            finish();
+            startActivity(getIntent());
+
             Toast.makeText(this,"Entry updated!",Toast.LENGTH_SHORT).show();
 
         }else if (view== findViewById(R.id.buttonDelete)){
