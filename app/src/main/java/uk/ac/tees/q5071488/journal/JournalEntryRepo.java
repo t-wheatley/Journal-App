@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -64,7 +67,8 @@ public class JournalEntryRepo
                 JournalEntry.COL_ID + "," +
                 JournalEntry.COL_NOTE + "," +
                 JournalEntry.COL_CATEGORY + "," +
-                JournalEntry.COL_DATETIME + "," +
+                "date(" + JournalEntry.COL_DATETIME + ")," +
+                "time(" + JournalEntry.COL_DATETIME + ")," +
                 JournalEntry.COL_LOCLONG + "," +
                 JournalEntry.COL_LOCLAT +
                 " FROM " + JournalEntry.TABLE
@@ -83,7 +87,8 @@ public class JournalEntryRepo
                 entry.entry_ID = cursor.getInt(cursor.getColumnIndex(JournalEntry.COL_ID));
                 entry.note = cursor.getString(cursor.getColumnIndex(JournalEntry.COL_NOTE));
                 entry.category = cursor.getString(cursor.getColumnIndex(JournalEntry.COL_CATEGORY));
-                entry.datetime = cursor.getDouble(cursor.getColumnIndex(JournalEntry.COL_DATETIME));
+                entry.datetime = cursor.getString(cursor.getColumnIndex("date(" + JournalEntry.COL_DATETIME + ")"))
+                        + " " + cursor.getString(cursor.getColumnIndex("time(" + JournalEntry.COL_DATETIME + ")"));
                 entry.longitude = cursor.getDouble(cursor.getColumnIndex(JournalEntry.COL_LOCLONG));
                 entry.latitude = cursor.getDouble(cursor.getColumnIndex(JournalEntry.COL_LOCLONG));
             } while (cursor.moveToNext());
@@ -93,7 +98,40 @@ public class JournalEntryRepo
         db.close();
         return entry;
     }
+    
+    public ArrayList<HashMap<String, String>> getEntryList()
+    {
+        // Connect to the database to read data
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT  " +
+                JournalEntry.COL_ID + "," +
+                JournalEntry.COL_NOTE + "," +
+                JournalEntry.COL_CATEGORY + "," +
+                "date(" + JournalEntry.COL_DATETIME + ")," +
+                "time(" + JournalEntry.COL_DATETIME + ")," +
+                JournalEntry.COL_LOCLONG + "," +
+                JournalEntry.COL_LOCLAT +
+                " FROM " + JournalEntry.TABLE;
 
+        ArrayList<HashMap<String, String>> entryList = new ArrayList<>();
+
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // Looping through all records and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                HashMap<String, String> entry = new HashMap<String, String>();
+                entry.put("id", cursor.getString(cursor.getColumnIndex(JournalEntry.COL_ID)));
+                entryList.add(entry);
+
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return entryList;
+    }
 
     public void removeAll()
     {
@@ -110,5 +148,36 @@ public class JournalEntryRepo
 
         db.close();
     }
+
+    public void updateEntry(JournalEntry entry) {
+
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(JournalEntry.COL_NOTE, entry.note);
+        values.put(JournalEntry.COL_CATEGORY, entry.category);
+
+        db.update
+                (
+                        JournalEntry.TABLE,
+                        values,
+                        JournalEntry.COL_ID + "= ?",
+                        new String[] { String.valueOf(entry.entry_ID) }
+                );
+        db.close();
+    }
+
+    public void removeEntry(int id)
+    {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.delete
+                (
+                        JournalEntry.TABLE,
+                        JournalEntry.COL_ID + "= ?",
+                        new String[] { String.valueOf(id) }
+                );
+        db.close();
+    }
+
 
 }

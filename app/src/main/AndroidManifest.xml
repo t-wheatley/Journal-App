@@ -17,6 +17,10 @@
         </activity>
         <activity android:name=".AddEntry">
         </activity>
+        <activity android:name=".EntryList">
+        </activity>
+        <activity android:name=".EntryDetail">
+        </activity>
     </application>
 
 </manifest>

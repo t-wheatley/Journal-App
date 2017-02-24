@@ -10,4 +10,9 @@
     <string name="text_notePrompt">Enter a note:</string>
     <string name="btn_cancel">Cancel</string>
     <string name="btn_save">Save</string>
+    <string name="btn_back">Back</string>
+    <string name="btn_loadList">Load Entries</string>
+    <string name="text_radioEditPrompt">Edit the category:</string>
+    <string name="text_noteEditPrompt">Edit the note:</string>
+    <string name="btn_delete">Delete</string>
 </resources>
