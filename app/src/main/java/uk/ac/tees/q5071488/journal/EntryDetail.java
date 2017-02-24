@@ -6,29 +6,34 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public class AddEntry extends AppCompatActivity implements View.OnClickListener
+public class EntryDetail extends AppCompatActivity implements View.OnClickListener
 {
-    Button btnCancel, btnSave;
+    Button btnCancel,  btnDelete, btnSave;
     EditText editTextNote;
+    TextView dateDisplay;
     RadioGroup radioCategoryGroup;
     JournalEntryRepo repo;
+    private int _Entry_Id=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_entry);
+        setContentView(R.layout.activity_entry_detail);
 
         btnCancel = (Button) findViewById(R.id.buttonCancel);
         btnCancel.setOnClickListener(this);
+
+        btnDelete = (Button) findViewById(R.id.buttonDelete);
+        btnDelete.setOnClickListener(this);
 
         btnSave = (Button) findViewById(R.id.buttonSave);
         btnSave.setOnClickListener(this);
@@ -37,38 +42,51 @@ public class AddEntry extends AppCompatActivity implements View.OnClickListener
         editTextNote.setOnClickListener(this);
         editTextNote.addTextChangedListener(textWatcher);
 
+        dateDisplay = (TextView) findViewById(R.id.dateDisplay);
+
         radioCategoryGroup = (RadioGroup) findViewById(R.id.radioCategory);
 
-        // Check Fields For Empty Values
-        checkFieldsForEmptyValues();
-
+        _Entry_Id =0;
+        Intent intent = getIntent();
+        _Entry_Id =intent.getIntExtra("entry_Id", 0);
         repo = new JournalEntryRepo(this);
+        JournalEntry entry = new JournalEntry();
+        entry = repo.getEntry(_Entry_Id);
+
+
+        editTextNote.setText(entry.getNote());
+        dateDisplay.setText("Date" + entry.getDatetime());
+        if (entry.getCategory().equals("Work"))
+        {
+            radioCategoryGroup.check(R.id.radioWork);
+        } else
+        {
+            radioCategoryGroup.check(R.id.radioPersonal);
+        }
+
     }
 
     @Override
     public void onClick(View view)
     {
-        // If save button pressed
-        if (view== findViewById(R.id.buttonSave))
-        {
+        if (view == findViewById(R.id.buttonSave)){
             JournalEntry entry = new JournalEntry();
+            entry.note = editTextNote.getText().toString();
+            entry.category = ((RadioButton)findViewById(radioCategoryGroup.getCheckedRadioButtonId())).getText().toString().trim();
+            entry.entry_ID = _Entry_Id;
 
-            // Getting string from editText
-            String note = editTextNote.getText().toString().trim();
-            // Getting string from selected radioButton
-            String category = ((RadioButton)findViewById(radioCategoryGroup.getCheckedRadioButtonId())).getText().toString().trim();
+            repo.updateEntry(entry);
 
-            // Adding the new entry to the database
-            entry.setNote(note);
-            entry.setCategory(category);
-            repo.addEntry(entry);
+            finish();
+            startActivity(getIntent());
 
-            // Toast to inform user the entry has been made
-            Toast.makeText(getApplicationContext(), "Entry added to your journal!", Toast.LENGTH_SHORT).show();
-        }
-        // If cancel button pressed
-        if (view== findViewById(R.id.buttonCancel))
-        {
+            Toast.makeText(this,"Entry updated!",Toast.LENGTH_SHORT).show();
+
+        }else if (view== findViewById(R.id.buttonDelete)){
+            repo.removeEntry(_Entry_Id);
+            Toast.makeText(this, "Entry deleted!", Toast.LENGTH_SHORT);
+            finish();
+        }else if (view== findViewById(R.id.buttonCancel)){
             finish();
         }
     }
@@ -95,7 +113,7 @@ public class AddEntry extends AppCompatActivity implements View.OnClickListener
         // Getting the value of the editText
         String s1 = editTextNote.getText().toString();
 
-        // Checking if the editText is empty
+        // Checking if athe editText is empty
         if(s1.trim().equals(""))
         {
             // If empty the button is disabled

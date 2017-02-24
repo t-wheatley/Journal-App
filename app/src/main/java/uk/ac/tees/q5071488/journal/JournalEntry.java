@@ -23,12 +23,12 @@ public class JournalEntry
     public int entry_ID;
     public String note;
     public String category;
-    public Double datetime;
+    public String datetime;
     public double longitude;
     public double latitude;
 
     // Constructor with all parameters
-    public JournalEntry(int entry_ID, String note, String category, double datetime, double longitude, double latitude)
+    public JournalEntry(int entry_ID, String note, String category, String datetime, double longitude, double latitude)
     {
         this.entry_ID = entry_ID;
         this.note = note;
@@ -39,7 +39,7 @@ public class JournalEntry
     }
 
     // Constructor without id parameter
-    public JournalEntry(String note, String category, double datetime, double longitude, double latitude)
+    public JournalEntry(String note, String category, String datetime, double longitude, double latitude)
     {
         this.note = note;
         this.category = category;
@@ -83,12 +83,12 @@ public class JournalEntry
         this.category = category;
     }
 
-    public double getDatetime()
+    public String getDatetime()
     {
         return datetime;
     }
 
-    public void setDatetime(double datetime)
+    public void setDatetime(String datetime)
     {
         this.datetime = datetime;
     }

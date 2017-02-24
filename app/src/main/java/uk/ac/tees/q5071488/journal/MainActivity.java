@@ -7,6 +7,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener
 {
 
@@ -29,7 +33,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         btnSearch = (Button) findViewById(R.id.buttonSearch);
         btnSearch.setOnClickListener(this);
-        
     }
 
     @Override
@@ -39,6 +42,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (view== findViewById(R.id.buttonAdd)){
             // Loads the addEntry activity
             Intent intent = new Intent(this, AddEntry.class);
+            startActivity(intent);
+        }
+
+        // If list button pressed
+        if (view== findViewById(R.id.buttonList)){
+            // Loads the addEntry activity
+            Intent intent = new Intent(this, EntryList.class);
             startActivity(intent);
         }
     }
